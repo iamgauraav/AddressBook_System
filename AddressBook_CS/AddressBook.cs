@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 namespace AddressBook_CS
 {
-    public class AddressBook
+     class AddressBook
     {
-        List<Contact> personDetails = new List<Contact>();
+         public LinkedList<Contact> personDetails = new LinkedList<Contact>();
 
         //creating a method for adding contacts in addressbook
         public void AddPerson()
         {
-            //creating object for contact class
             Contact person = new Contact();
+            Console.WriteLine("Enter first name");
+            person.firstName = Console.ReadLine();
+            bool existName = DuplicateEntryCheck(person.firstName);
+            if (existName)
+            {
+                Console.WriteLine("This contact already exist please add new entry");
+                AddPerson();
+            }
+
             Console.WriteLine("Enter First name");
             person.firstName = Console.ReadLine();
             Console.WriteLine("Enter Last name");
@@ -27,27 +36,50 @@ namespace AddressBook_CS
             person.email = Console.ReadLine();
             Console.WriteLine("Enter phone number");
             person.phoneNumber = long.Parse(Console.ReadLine());
-            personDetails.Add(person);
+            personDetails.AddLast(person);
         }
+        /// <summary>
+        /// Method for checking and avoiding duplicate entry
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        public bool DuplicateEntryCheck(string Name)
+        {
+            //using lambda expression to check for firstname
+            bool found = personDetails.Any(e => (e.firstName.ToLower().Equals(Name.ToLower())));
+            if (found)
+                return true;
+            else
+                return false;
+        }
+
         /// <summary>
         /// Method for Printing the address book details
         /// </summary>
         /// <param name="args"></param>
+
         public void Print()
         {
-            foreach (Contact person in personDetails)
+            if (personDetails.Count == 0)
             {
-                Console.WriteLine("-------Address book details-------");
-                Console.WriteLine("First Name:" + person.firstName);
-                Console.WriteLine("Last Name:" + person.lastName);
-                Console.WriteLine("Address:" + person.address);
-                Console.WriteLine("City:" + person.city);
-                Console.WriteLine("State:" + person.state);
-                Console.WriteLine("Zip:" + person.zip);
-                Console.WriteLine("Email:" + person.email);
-                Console.WriteLine("Phone Number:" + person.phoneNumber);
+                Console.WriteLine("Your Address book is empty.");
+                return;
             }
-  
+            else
+            {
+                foreach (Contact person in personDetails)
+                {
+                    Console.WriteLine("-------Address book details-------");
+                    Console.WriteLine("First Name:" + person.firstName);
+                    Console.WriteLine("Last Name:" + person.lastName);
+                    Console.WriteLine("Address:" + person.address);
+                    Console.WriteLine("City:" + person.city);
+                    Console.WriteLine("State:" + person.state);
+                    Console.WriteLine("Zip:" + person.zip);
+                    Console.WriteLine("Email:" + person.email);
+                    Console.WriteLine("Phone Number:" + person.phoneNumber);
+                }
+            }
         }
         /// <summary>
         /// Method for Editing the contacts
