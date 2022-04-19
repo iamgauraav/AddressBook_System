@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 namespace AddressBook_CS
 {
-    public class AddressBookMain
+    class AddressBookMain
     {
-        static Dictionary<string, LinkedList<Contact>> addressBook = new Dictionary<string, LinkedList<Contact>>();
+        public static Dictionary<string, LinkedList<Contact>> addressBook = new Dictionary<string, LinkedList<Contact>>();
 
         static void Main(string[] args)
         {
@@ -20,7 +20,7 @@ namespace AddressBook_CS
             {
                 Console.WriteLine("Enter the name of the address book");
                 string bookName = Console.ReadLine();
-                //creating object person1 of address book
+                //creating object person1 of addressbook class
                 AddressBook person1 = new AddressBook();
                 Console.WriteLine("Enter the number of contacts you want to add in the address book:");
                 int contactNum = Convert.ToInt32(Console.ReadLine());
@@ -53,6 +53,7 @@ namespace AddressBook_CS
                         Console.WriteLine("Please enter a valid input");
                         break;
                 }
+
                 if (addressBook.ContainsKey(bookName))
                 {
                     Console.WriteLine("Address book is already exists");
