@@ -119,6 +119,31 @@ namespace AddressBook_CS
             {
                 Console.WriteLine("Your address book is empty..!");
             }
-        } 
+        }
+
+        public void Delete()
+        {
+            Console.WriteLine("Enter the first name of the person you want to remove");
+            string delete = Console.ReadLine();
+            //Tolist() used to return a new list,means input converted to list
+            foreach (var person in personDetails)
+            {
+                if (person.firstName.ToUpper() == delete.ToUpper())
+                {
+                    Console.WriteLine("Are you sure you want to delete this contact?(Y/N)");
+                    if (Console.ReadKey().Key == ConsoleKey.Y)
+                    {
+                        personDetails.Remove(person);
+                        Console.WriteLine("\nContact is deleted");
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Contact is not present");
+                    }
+                }
+            }
+        }
     }
 }
+
