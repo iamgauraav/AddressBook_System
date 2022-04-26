@@ -1,8 +1,7 @@
 ﻿using System;
-
 namespace AddressBook_CS
 {
-    class Contact
+    public class Contact
     {
         public string firstName { get; set; }
         public string lastName { get; set; }
@@ -11,6 +10,6 @@ namespace AddressBook_CS
         public string state { get; set; }
         public string zip { get; set; }
         public string email { get; set; }
-        public long phoneNumber { get; set; }
+        public string phoneNumber { get; set; }
     }
 }
