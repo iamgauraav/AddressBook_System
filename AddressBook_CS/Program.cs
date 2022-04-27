@@ -5,34 +5,55 @@ using System.Text;
 using System.Threading.Tasks;
 namespace AddressBook_CS
 {
-    class Program
+    class AddContact
     {
-        //Declaring instance variables
-        public string firstName;
-        public string lastName;
-        public string address;
-        public string city;
-        public string state;
-        public string zip;
-        public string email;
-        public int phoneNumber;
+        public List<Contact> personDetails = new List<Contact>();
 
-        //Parameterized constructor
-        public Contacts(string firstName, string lastName, string address, string city, string state, string zip, int phoneNumber, string email)
+        //Creating a method for adding contacts in adrressbook
+        private void AddPerson()
         {
-            this.firstName = firstName;
-            this.lastName = lastName;
-            this.address = address;
-            this.city = city;
-            this.state = state;
-            this.zip = zip;
-            this.phoneNumber = phoneNumber;
-            this.email = email;
+            //creating object person from Contact class
+            Contact person = new Contact();
+            Console.WriteLine("Enter first name");
+            person.firstName = Console.ReadLine();
+            Console.WriteLine("Enter last name");
+            person.lastName = Console.ReadLine();
+            Console.WriteLine("Enter address name");
+            person.address = Console.ReadLine();
+            Console.WriteLine("Enter city name");
+            person.city = Console.ReadLine();
+            Console.WriteLine("Enter state name");
+            person.state = Console.ReadLine();
+            Console.WriteLine("Enter zip name");
+            person.zip = Console.ReadLine();
+            Console.WriteLine("Enter phone number");
+            person.phoneNumber = Console.ReadLine();
+            Console.WriteLine("Enter email id");
+            person.email = Console.ReadLine();
+            personDetails.Add(person);
+            Print(person);
+        }
+
+        //Printing the address book details 
+        private void Print(Contact person)
+        {
+            Console.WriteLine("---Address book details----");
+            Console.WriteLine("First Name:" + person.firstName);
+            Console.WriteLine("Last Name:" + person.lastName);
+            Console.WriteLine("Address:" + person.address);
+            Console.WriteLine("City:" + person.city);
+            Console.WriteLine("State:" + person.state);
+            Console.WriteLine("Zip:" + person.zip);
+            Console.WriteLine("Phone Number:" + person.phoneNumber);
+            Console.WriteLine("Email:" + person.email);
         }
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to your Address Book");
+            Console.WriteLine("---Welcome to your Address Book--");
+            //creating object person1 of Addcontact Class()
+            AddContact person1 = new AddContact();
+            person1.AddPerson();
             Console.ReadLine();
         }
     }
