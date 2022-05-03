@@ -187,7 +187,6 @@ namespace AddressBook_CS
             }
         }
 
-        //UC10 Get person by city or state by counting them
         //displays the count based on cities and states
         public void DisplayCount()
         {
@@ -201,6 +200,26 @@ namespace AddressBook_CS
             foreach (KeyValuePair<string, List<AddressBook>> kvp in State)
             {
                 Console.WriteLine("The state {0} have {1} contacts", kvp.Key, kvp.Value.Count);
+            }
+        }
+
+        //UC11-Sort the contact details in address book alphabatically
+        public void SortingContactAlphabatically(Dictionary<string, List<AddressBook>> addressBook)
+        {
+            foreach (KeyValuePair<string, List<AddressBook>> kvp in addressBook)
+            {
+                Console.WriteLine("The contacts sorted alphatically in address book {0}", kvp.Key);
+                List<AddressBook> list = new List<AddressBook>();
+                foreach (var member in kvp.Value)
+                {
+                    list.Add(member);
+                }
+                //Using Lambda exp to sort it by first name alphabatically
+                List<AddressBook> members = list.OrderBy(x => x.firstName).ToList();
+                foreach (var member in members)
+                {
+                    Console.WriteLine(member.ToString());
+                }
             }
         }
 
