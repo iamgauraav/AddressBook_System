@@ -187,6 +187,23 @@ namespace AddressBook_CS
             }
         }
 
+        //UC10 Get person by city or state by counting them
+        //displays the count based on cities and states
+        public void DisplayCount()
+        {
+            Console.WriteLine("Person details counts by city");
+            foreach (KeyValuePair<string, List<AddressBook>> kvp in City)
+            {
+                Console.WriteLine("The city {0} have {1} contacts", kvp.Key, kvp.Value.Count);
+            }
+
+            Console.WriteLine("Person details counts by state");
+            foreach (KeyValuePair<string, List<AddressBook>> kvp in State)
+            {
+                Console.WriteLine("The state {0} have {1} contacts", kvp.Key, kvp.Value.Count);
+            }
+        }
+
         //creating method for editing existing contact in address book
         public void Edit()
         {
