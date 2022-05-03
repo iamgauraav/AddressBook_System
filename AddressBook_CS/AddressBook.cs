@@ -12,7 +12,7 @@ namespace AddressBook_CS
             Contact person = new Contact();
             Console.WriteLine("Enter first name");
             person.firstName = Console.ReadLine();
-            Console.WriteLine("Enter last name");
+            Consolfe.WriteLine("Enter last name");
             person.lastName = Console.ReadLine();
             Console.WriteLine("Enter address name");
             person.address = Console.ReadLine();
@@ -111,6 +111,29 @@ namespace AddressBook_CS
             else
             {
                 Console.WriteLine("Your address book is empty");
+            }
+        }
+        //method for deleating or remove a existing contact
+        public void Delete()
+        {
+            Console.WriteLine("Enter the first name of the person you would like to remove.");
+            string delete = Console.ReadLine();
+            //Tolist() used to return a new list,means input converted to list
+            foreach (var person in personDetails)
+            {
+                if (person.firstName.ToUpper() == delete.ToUpper())
+                {
+                    Console.WriteLine("Are you sure you want to delete this contact?(Y/N)");
+                    if (Console.ReadKey().Key == ConsoleKey.Y)
+                    {
+                        personDetails.Remove(person);
+                        Console.WriteLine("\nContact is deleted");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Contact is not present");
+                }
             }
         }
     }
