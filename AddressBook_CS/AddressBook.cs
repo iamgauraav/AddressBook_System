@@ -5,7 +5,7 @@ namespace AddressBook_CS
 {
     public class AddressBook
     {
-        public LinkedList<Contact> personDetails = new LinkedList<Contact>();
+        public List<Contact> personDetails = new List<Contact>();
 
         //Creating a method for adding contacts in adrressbook
         public void AddPerson()
@@ -13,7 +13,7 @@ namespace AddressBook_CS
             Contact person = new Contact();
             Console.WriteLine("Enter first name");
             person.firstName = Console.ReadLine();
-            bool existName = DuplicateEntryCheck(person.firstName);
+            bool existName = DuplicareEntryCheck(person.firstName);
             if (existName)
             {
                 Console.WriteLine("This contact already exist please add new entry");
@@ -33,7 +33,7 @@ namespace AddressBook_CS
             person.phoneNumber = Console.ReadLine();
             Console.WriteLine("Enter email id");
             person.email = Console.ReadLine();
-            personDetails.AddLast(person);
+            personDetails.Add(person);
         }
 
         //Check and avoid duplicate entries 
@@ -47,6 +47,22 @@ namespace AddressBook_CS
                 return false;
         }
 
+        public void SearchbyCityorState(List<Contact> list, string cityStateName)
+        {
+            List<Contact> member = list.FindAll(x => x.city.ToLower() == cityStateName || x.state.ToLower() == cityStateName);
+            if (member.Count > 0)
+            {
+                foreach (var members in member)
+                {
+                    Print();
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("No contacts present");
+            }
+        }
         //Printing the address book details 
         public void Print()
         {
@@ -71,6 +87,7 @@ namespace AddressBook_CS
             }
             
         }
+        //creating method for editing existing contact in addess book
         public void Edit()
         {
             if (personDetails.Count != 0)
