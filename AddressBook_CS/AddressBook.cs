@@ -4,7 +4,7 @@ namespace AddressBook_CS
 {
     public class AddressBook
     {
-        public List<Contact> personDetails = new List<Contact>();
+        public LinkedList<Contact> personDetails = new LinkedList<Contact>();
 
         //Creating a method for adding contacts in adrressbook
         public void AddPerson()
@@ -12,7 +12,7 @@ namespace AddressBook_CS
             Contact person = new Contact();
             Console.WriteLine("Enter first name");
             person.firstName = Console.ReadLine();
-            Consolfe.WriteLine("Enter last name");
+            Console.WriteLine("Enter last name");
             person.lastName = Console.ReadLine();
             Console.WriteLine("Enter address name");
             person.address = Console.ReadLine();
@@ -26,24 +26,32 @@ namespace AddressBook_CS
             person.phoneNumber = Console.ReadLine();
             Console.WriteLine("Enter email id");
             person.email = Console.ReadLine();
-            personDetails.Add(person);
+            personDetails.AddLast(person);
         }
 
         //Printing the address book details 
         public void Print()
         {
-            foreach (Contact person in personDetails)
+            if (personDetails.Count == 0)
             {
-                Console.WriteLine("---Address book details----");
-                Console.WriteLine("First Name:" + person.firstName);
-                Console.WriteLine("Last Name:" + person.lastName);
-                Console.WriteLine("Address:" + person.address);
-                Console.WriteLine("City:" + person.city);
-                Console.WriteLine("State:" + person.state);
-                Console.WriteLine("Zip:" + person.zip);
-                Console.WriteLine("Phone Number:" + person.phoneNumber);
-                Console.WriteLine("Email:" + person.email);
+                Console.WriteLine("Your Address book is empty.");
             }
+            else
+            {
+                foreach (Contact person in personDetails)
+                {
+                    Console.WriteLine("---Address book details----");
+                    Console.WriteLine("First Name:" + person.firstName);
+                    Console.WriteLine("Last Name:" + person.lastName);
+                    Console.WriteLine("Address:" + person.address);
+                    Console.WriteLine("City:" + person.city);
+                    Console.WriteLine("State:" + person.state);
+                    Console.WriteLine("Zip:" + person.zip);
+                    Console.WriteLine("Phone Number:" + person.phoneNumber);
+                    Console.WriteLine("Email:" + person.email);
+                }
+            }
+            
         }
         public void Edit()
         {
