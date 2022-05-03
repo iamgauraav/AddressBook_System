@@ -187,6 +187,7 @@ namespace AddressBook_CS
             }
         }
 
+        //UC10 Get person by city or state by counting them
         //displays the count based on cities and states
         public void DisplayCount()
         {
@@ -220,6 +221,58 @@ namespace AddressBook_CS
                 {
                     Console.WriteLine(member.ToString());
                 }
+            }
+        }
+
+        //UC12-sorting the address book based on city name
+        public void SortingBasedOnCity(Dictionary<string, List<AddressBook>> addressbooknames)
+        {
+            foreach (KeyValuePair<string, List<AddressBook>> kvp in addressbooknames)
+            {
+                Console.WriteLine("The contacts sorted based on city name in address book {0}", kvp.Key);
+                List<AddressBook> newMembers = new List<AddressBook>();
+                foreach (var member in kvp.Value)
+                {
+                    newMembers.Add(member);
+                }
+                List<AddressBook> members = newMembers.OrderBy(x => x.city).ToList();
+                foreach (var mem in members)
+                {
+                    Console.WriteLine(mem.ToString());
+                }
+            }
+        }
+        //Sorting based on State 
+        public void SortingBasedOnState(Dictionary<string, List<AddressBook>> addressbooknames)
+        {
+            foreach (KeyValuePair<string, List<AddressBook>> kvp in addressbooknames)
+            {
+                Console.WriteLine("The contacts sorted based on state in address book {0}", kvp.Key);
+                List<AddressBook> newMembers = new List<AddressBook>();
+                foreach (var member in kvp.Value)
+                {
+                    newMembers.Add(member);
+                }
+                List<AddressBook> members = newMembers.OrderBy(x => x.state).ToList();
+                foreach (var mem in members)
+                    Console.WriteLine(mem.ToString());
+            }
+        }
+
+        //Sorting based on zipcode
+        public void SortingBasedOnZip(Dictionary<string, List<AddressBook>> addressbooknames)
+        {
+            foreach (KeyValuePair<string, List<AddressBook>> kvp in addressbooknames)
+            {
+                Console.WriteLine("The contacts sorted based on zip code in address book {0}", kvp.Key);
+                List<AddressBook> newMembers = new List<AddressBook>();
+                foreach (var member in kvp.Value)
+                {
+                    newMembers.Add(member);
+                }
+                List<AddressBook> members = newMembers.OrderBy(x => x.zipCode).ToList();
+                foreach (var mem in members)
+                    Console.WriteLine(mem.ToString());
             }
         }
 
