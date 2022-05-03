@@ -5,89 +5,189 @@ namespace AddressBook_CS
 {
     public class AddressBook
     {
-        public List<Contact> personDetails = new List<Contact>();
+        public static Dictionary<string, List<AddressBook>> City = new Dictionary<string, List<AddressBook>>();
+        public static Dictionary<string, List<AddressBook>> State = new Dictionary<string, List<AddressBook>>();
+        public List<AddressBook> personDetails;
+        public List<AddressBook> stateDetails;
+        public List<AddressBook> cityDetails;
+        public List<AddressBook> existingCityorState;
 
-        //Creating a method for adding contacts in adrressbook
+        //Default constructor
+        public AddressBook()
+        {
+            personDetails = new List<AddressBook>();
+        }
+
+        //Decalring instance variables
+        public string firstName;
+        public string lastName;
+        public string address;
+        public string city;
+        public string state;
+        public string zipCode;
+        public string phoneNum;
+        public string emailId;
+
+        //Parameterized constructor
+        public AddressBook(string firstName, string lastName, string address, string city, string state, string zip, string phoneNumber, string email)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.address = address;
+            this.city = city;
+            this.state = state;
+            this.zipCode = zip;
+            this.phoneNum = phoneNumber;
+            this.emailId = email;
+        }
+
+        //Adding deatils of a contact in address book
         public void AddPerson()
         {
-            Contact person = new Contact();
-            Console.WriteLine("Enter first name");
-            person.firstName = Console.ReadLine();
-            bool existName = DuplicareEntryCheck(person.firstName);
-            if (existName)
-            {
-                Console.WriteLine("This contact already exist please add new entry");
-                AddPerson();
-            }
-            Console.WriteLine("Enter last name");
-            person.lastName = Console.ReadLine();
-            Console.WriteLine("Enter address name");
-            person.address = Console.ReadLine();
-            Console.WriteLine("Enter city name");
-            person.city = Console.ReadLine();
-            Console.WriteLine("Enter state name");
-            person.state = Console.ReadLine();
-            Console.WriteLine("Enter zip name");
-            person.zip = Console.ReadLine();
-            Console.WriteLine("Enter phone number");
-            person.phoneNumber = Console.ReadLine();
-            Console.WriteLine("Enter email id");
-            person.email = Console.ReadLine();
-            personDetails.Add(person);
+            Console.Write("Enter First Name: ");
+            string FirstName = Console.ReadLine();
+            Console.Write("Enter Last Name: ");
+            string LastName = Console.ReadLine();
+            Console.Write("Enter Address : ");
+            string Addresses = Console.ReadLine();
+            Console.Write("Enter City : ");
+            string City = Console.ReadLine();
+            Console.Write("Enter State : ");
+            string State = Console.ReadLine();
+            Console.Write("Enter PinCode: ");
+            string ZipCode = Console.ReadLine();
+            Console.Write("Enter Phone Number: ");
+            string PhoneNumber = Console.ReadLine();
+            Console.Write("Enter EmailId: ");
+            string EmailId = Console.ReadLine();
+            CreateContact(FirstName, LastName, Addresses, City, State, ZipCode, PhoneNumber, EmailId);
         }
 
-        //Check and avoid duplicate entries 
-        public bool DuplicareEntryCheck(string Name)
+        //Getting the user details
+        public void CreateContact(string firstName, string lastName, string address, string city, string state, string zipCode, string phoneNum, string emailId)
         {
-            //using lamda expression to check for firstname
-            bool found = personDetails.Any(e => (e.firstName.ToLower().Equals(Name.ToLower())));
-            if (found)
-                return true;
-            else
-                return false;
-        }
-
-        public void SearchbyCityorState(List<Contact> list, string cityStateName)
-        {
-            List<Contact> member = list.FindAll(x => x.city.ToLower() == cityStateName || x.state.ToLower() == cityStateName);
-            if (member.Count > 0)
+            int contact = 0;
+            AddressBook person = new AddressBook(firstName, lastName, address, city, state, zipCode, phoneNum, emailId);
+            if (contact == 0)
             {
-                foreach (var members in member)
+                personDetails.Add(person);
+                Print(person);
+                if (State.ContainsKey(state))
                 {
-                    Print();
+                    existingCityorState = State[state];
+                    existingCityorState.Add(person);
                 }
-
+                else
+                {
+                    stateDetails = new List<AddressBook>();
+                    stateDetails.Add(person);
+                    State.Add(state, stateDetails);
+                }
+                if (City.ContainsKey(city))
+                {
+                    existingCityorState = City[city];
+                    existingCityorState.Add(person);
+                }
+                else
+                {
+                    cityDetails = new List<AddressBook>();
+                    cityDetails.Add(person);
+                    City.Add(city, cityDetails);
+                }
+                contact++;
             }
-            else
+            else if (contact != 0)
             {
-                Console.WriteLine("No contacts present");
+                //Checking duplicates by using lambda
+                AddressBook addressBooks = personDetails.Find(x => x.firstName.Equals(firstName));
+                if (addressBooks == null)
+                {
+                    person = new AddressBook(firstName, lastName, address, city, state, zipCode, phoneNum, emailId);
+                    personDetails.Add(person);
+                    Print(person);
+                    if (State.ContainsKey(state))
+                    {
+                        existingCityorState = State[state];
+                        existingCityorState.Add(person);
+
+                    }
+                    else
+                    {
+                        stateDetails = new List<AddressBook>();
+                        stateDetails.Add(person);
+                        State.Add(state, stateDetails);
+
+                    }
+                    if (City.ContainsKey(city))
+                    {
+                        existingCityorState = City[city];
+                        existingCityorState.Add(person);
+                    }
+                    else
+                    {
+                        cityDetails = new List<AddressBook>();
+                        cityDetails.Add(person);
+                        City.Add(city, cityDetails);
+                    }
+                    contact++;
+                }
+                else
+                {
+                    Console.WriteLine("This person already exists in your AddressBook!");
+                }
             }
         }
+
         //Printing the address book details 
-        public void Print()
+        public void Print(AddressBook person)
         {
             if (personDetails.Count == 0)
             {
-                Console.WriteLine("Your Address book is empty.");
+                Console.WriteLine("Your address book is empty.");
+                return;
             }
             else
             {
-                foreach (Contact person in personDetails)
+                Console.WriteLine("---Address book details----");
+                Console.WriteLine("First Name:" + person.firstName);
+                Console.WriteLine("Last Name:" + person.lastName);
+                Console.WriteLine("Address:" + person.address);
+                Console.WriteLine("City:" + person.city);
+                Console.WriteLine("State:" + person.state);
+                Console.WriteLine("Zip:" + person.zipCode);
+                Console.WriteLine("Phone Number:" + person.phoneNum);
+                Console.WriteLine("Email:" + person.emailId);
+            }
+        }
+
+        //Uc9 for creating method to view person by city or state
+        public void ViewCityorState(int option)
+        {
+            if (option == 1)
+            {
+                foreach (var cityName in City)
                 {
-                    Console.WriteLine("---Address book details----");
-                    Console.WriteLine("First Name:" + person.firstName);
-                    Console.WriteLine("Last Name:" + person.lastName);
-                    Console.WriteLine("Address:" + person.address);
-                    Console.WriteLine("City:" + person.city);
-                    Console.WriteLine("State:" + person.state);
-                    Console.WriteLine("Zip:" + person.zip);
-                    Console.WriteLine("Phone Number:" + person.phoneNumber);
-                    Console.WriteLine("Email:" + person.email);
+                    Console.WriteLine("Display List for City: {0}", cityName.Key);
+                    foreach (var item in cityName.Value)
+                    {
+                        Console.WriteLine("The contact person {0} , staying in {1} City", item.firstName, item.city);
+                    }
                 }
             }
-            
+            else
+            {
+                foreach (var stateName in State)
+                {
+                    Console.WriteLine("Display List for State: {0}\n", stateName.Key);
+                    foreach (var item in stateName.Value)
+                    {
+                        Console.WriteLine("The contact person {0}, belongs to {1} State", item.firstName, item.state);
+                    }
+                }
+            }
         }
-        //creating method for editing existing contact in addess book
+
+        //creating method for editing existing contact in address book
         public void Edit()
         {
             if (personDetails.Count != 0)
@@ -96,6 +196,7 @@ namespace AddressBook_CS
                 string edit = Console.ReadLine();
                 foreach (var person in personDetails)
                 {
+                    //ToUpper used to convert to uppercase 
                     if (person.firstName.ToUpper() == edit.ToUpper())
                     {
                         while (true)
@@ -108,7 +209,8 @@ namespace AddressBook_CS
                             Console.WriteLine("Enter 5 to Change City ");
                             Console.WriteLine("Enter 6 to Change State ");
                             Console.WriteLine("Enter 7 to Change Pincode ");
-                            Console.WriteLine("Enter 8 to Exit ");
+                            Console.WriteLine("Enter 8 to Change Email ");
+                            Console.WriteLine("Enter 9 to Exit ");
                             int Option = Convert.ToInt32(Console.ReadLine());
                             //Switch case statement taken to choose desired operation
                             switch (Option)
@@ -123,7 +225,7 @@ namespace AddressBook_CS
                                     break;
                                 case 3:
                                     Console.WriteLine("Enter the New Phone Number: ");
-                                    person.phoneNumber = Console.ReadLine();
+                                    person.phoneNum = Console.ReadLine();
                                     break;
                                 case 4:
                                     Console.WriteLine("Enter the New Address: ");
@@ -139,16 +241,20 @@ namespace AddressBook_CS
                                     break;
                                 case 7:
                                     Console.WriteLine("Enter the New Pin Code: ");
-                                    person.zip = Console.ReadLine();
+                                    person.zipCode = Console.ReadLine();
                                     break;
                                 case 8:
+                                    Console.WriteLine("Enter the New Pin Email: ");
+                                    person.emailId = Console.ReadLine();
+                                    break;
+                                case 9:
                                     return;
                             }
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Enter the valid name!");
+                        Console.WriteLine("Contact does not exist");
                     }
                 }
             }
@@ -157,6 +263,7 @@ namespace AddressBook_CS
                 Console.WriteLine("Your address book is empty");
             }
         }
+
         //method for deleating or remove a existing contact
         public void Delete()
         {
@@ -182,5 +289,4 @@ namespace AddressBook_CS
             }
         }
     }
-
 }
