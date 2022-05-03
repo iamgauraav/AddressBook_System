@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 namespace AddressBook_CS
 {
     public class AddressBook
@@ -12,6 +13,12 @@ namespace AddressBook_CS
             Contact person = new Contact();
             Console.WriteLine("Enter first name");
             person.firstName = Console.ReadLine();
+            bool existName = DuplicateEntryCheck(person.firstName);
+            if (existName)
+            {
+                Console.WriteLine("This contact already exist please add new entry");
+                AddPerson();
+            }
             Console.WriteLine("Enter last name");
             person.lastName = Console.ReadLine();
             Console.WriteLine("Enter address name");
@@ -27,6 +34,17 @@ namespace AddressBook_CS
             Console.WriteLine("Enter email id");
             person.email = Console.ReadLine();
             personDetails.AddLast(person);
+        }
+
+        //Check and avoid duplicate entries 
+        public bool DuplicareEntryCheck(string Name)
+        {
+            //using lamda expression to check for firstname
+            bool found = personDetails.Any(e => (e.firstName.ToLower().Equals(Name.ToLower())));
+            if (found)
+                return true;
+            else
+                return false;
         }
 
         //Printing the address book details 
@@ -75,6 +93,7 @@ namespace AddressBook_CS
                             Console.WriteLine("Enter 7 to Change Pincode ");
                             Console.WriteLine("Enter 8 to Exit ");
                             int Option = Convert.ToInt32(Console.ReadLine());
+                            //Switch case statement taken to choose desired operation
                             switch (Option)
                             {
                                 case 1:
@@ -136,6 +155,7 @@ namespace AddressBook_CS
                     {
                         personDetails.Remove(person);
                         Console.WriteLine("\nContact is deleted");
+                        break;
                     }
                 }
                 else
